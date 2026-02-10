@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
+
+    <button id="switch"> Light switch</button>
+
+
     <script>
 
         // var is an older way of creating variables in JavaScript (it needs to be written in lowercase)
@@ -51,6 +55,58 @@
         console.log(firstPart - secondPart); //logs NaN because the operator - is not used that way, only used a math operator, 
         // because usually doesn't make sense, like how can I substract something that is not a number?
         // so because + and - are used a bit differently in JS, when you subtract, a number looking string gets coerced into a actual number
+
+        console.log(typeof(myString)); //checks the type of myString variable. Logs string
+
+        let myNumber = "123";
+
+        console.log(typeof(myString)); //a string because of the quotes
+
+        myNumber = 123;
+
+        console.log(typeof(myNumber)); //now its a number
+
+        //booleans are a very simple TYPE
+
+        let myBool = "false";
+
+        console.log(typeof(myBool));
+
+        myBool = false;
+
+        console.log(typeof(myBool));
+
+        //where booleans really shine is when you want to be able to change the state of something to the opposite state, without even necessarily knowing the current state.
+        //For example: we want to switch the light off, but the button can be already pressed up or down. But regardless of the button position, we know that it will toggle the opposite of the current state (where lights are on)
+
+        let lightsOn = true;
+        const myButton = document.getElementById("switch");
+
+        myButton.addEventListener("click", () => {
+
+            lightsOn = !lightsOn;  //this basically says "lightsOn" should be what its not
+
+            if (lightsOn) {
+                document.body.style.backgroundColor = "white";
+            } else {
+                document.body.style.backgroundColor = "black";
+            }
+        });
+
+        //Arrays are another type in JS (Array is basically a way of store several information in one container)
+        //we can use when we need to do something randomly
+
+        const worstEmployees = ["Mike", "Kate", "Paul", "John"]; 
+        
+        console.log(typeof(employees)); //object (but it's an array object)
+
+        //example: we need to fire of the top employees and we will just draw a random lot
+        console.log(worstEmployees[0]); //you can get a certain slot from the array like this // logs mike
+
+        const randomIndex = Math.floor(Math.random() * worstEmployees.length); 
+
+        alert("The person who just got fired is: " + worstEmployees[randomIndex]);
+
 
 
 
