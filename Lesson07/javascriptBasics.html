@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // var is an older way of creating variables in JavaScript (it needs to be written in lowercase)
+        var myVariable; //this creates a variable but doesn't assign anything into it
+
+        var myAssignedVariable = "sugar"; //here we both create and assign a variable
+
+        //let is how most people create variables nowadays
+        let worldPeace = "soon";
+        worldPeace = "not likely" //you can re-assign a variable created with let
+
+        const pi = 3.14159 //when you use const to create a variable, you can't reassign it later (is used for something that not gonna change)
+
+        // pi = 2.5; in this case, it will show an error message in the console on your browser
+
+        const player = {
+            name: "Antti",
+            score: 0
+        }
+        
+        //player = "cat"; //still can't reassign a const
+
+        player.score = 1; //the thing assigned to a const can change, just you can't assign something else to the const
+
+        //TYPES
+
+        let myString = "abcdefg"; //a string type of variable
+
+        //you can't or shouldn't really do math with strings, but JS kind of weird when it comes to that...
+
+        let memeString = "11";
+
+        console.log(memeString +1); //console.log 111
+        console.log(memeString - 1); //console.log 10 so here the math is weirdly working
+
+        //Explanation:
+        // the operator + is also used for the concatenation of string like this:
+
+        let firstPart = "Hello";
+        let secondPart = " World";
+
+        console.log(firstPart + secondPart); //logs HelloWord
+        console.log(firstPart - secondPart); //logs NaN because the operator - is not used that way, only used a math operator, 
+        // because usually doesn't make sense, like how can I substract something that is not a number?
+        // so because + and - are used a bit differently in JS, when you subtract, a number looking string gets coerced into a actual number
+
+
+
+    </script>
+
+</body>
+</html>
