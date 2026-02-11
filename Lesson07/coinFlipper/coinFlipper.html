@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+    }
+
+    #buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #btnFlip {
+        width: 200px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    #btnHeads {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #btnTails {
+        background-color: #f51915;
+        color: white;
+    }
+
+</style>
+
+
+</head>
+<body>
+    
+    <main> 
+
+    <div id="buttons">
+
+    <button id="btnHeads">GUESS HEADS!</button>
+    <button id="btnTails">GUESS TAILS!</button>
+
+    <img id="coin" src="images/neutral.png" alt="coin">
+    </div>
+
+    </main>
+
+    <script>
+        const flipHeads = document.getElementById("btnHeads");
+        const flipTails = document.getElementById("btnTails");
+        const coinImg = document.getElementById("coin");
+
+        // create a variable for tracking score here 
+
+        let score = 0;
+
+        flipHeads.addEventListener("click", () => flipCoin("heads"));
+        flipTails.addEventListener("click", () => flipCoin("tails"));
+
+        function flipCoin(userGuess) {
+
+            // Disable buttons immediately
+            flipHeads.disabled = true;
+            flipTails.disabled = true;
+
+            //Show neutral first
+            coinImg.src = "images/neutral.png";
+
+            setTimeout (() => {
+                
+            let roundedNumber = Math.floor(Math.random() * 2); //change here because of chatgpt suggestion that said that Math.round() slightly biases the probability 
+
+            let result;
+
+            if (roundedNumber == 0) {
+                result = "heads";
+                coinImg.src="images/heads.png";
+            } else {
+                result = "tails";
+                coinImg.src="images/tails.png";
+            }
+
+            if (userGuess == result) {
+                score++;
+                alert(`You guessed right, keep going! Score: ${score}`);
+            } else {
+            score = 0;
+            alert("You guessed wrong, so game over for you!");
+        }
+
+            //After 1.0 seconds, return to neutral
+            setTimeout(() => {
+                coinImg.src = "images/neutral.png";
+
+            //Re-enable buttons
+                flipHeads.disabled = false;
+                flipTails.disabled = false;
+
+            }, 1000);
+
+        }, 500); // small delay before revealing result
+    
+        }        
+        
+
+    </script>
+
+</body>
+</html>
