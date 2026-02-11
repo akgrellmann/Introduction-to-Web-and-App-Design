@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS Painterly Flower</title>
+
+	<style>
+
+/* ===== RESET ===== */
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* ===== PAGE ===== */
+
+body {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #170c0c;
+}
+
+/* ===== FRAME ===== */
+
+.frame {
+	width: 500px;
+	height: 500px;
+	padding: 55px 85px 85px 85px;
+	position: relative;
+	background-color: #c1362e; /*base red */
+	box-shadow: 
+		inset 0 0 0 2px rgba(0,0,0,.15),
+		0 30px 60px rgba(0,0,0,.5);
+		overflow: hidden;
+}
+
+/* painterly noise overlay */
+
+.frame::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+
+	background:
+		/* watercolor blotches */
+		repeating-radial-gradient(
+			circle at 25% 30%,
+			rgba(255,140,140,0.25) 0,
+			rgba(255,140,140,0.25) 1px,
+			transparent 4px,
+			transparent 14px
+		),
+		repeating-radial-gradient(
+			circle at 70% 40%,
+			rgba(255,120,120,0.22) 0,
+			rgba(255,120,120,0.22) 1px,
+			transparent 4px,
+			transparent 12px
+		),
+		repeating-radial-gradient(
+			circle at 85% 75%,
+			rgba(255,160,160,0.2) 0,
+			rgba(255,160,160,0.2) 1px,
+			transparent 5px,
+			transparent 16px
+		),
+
+		/* paint scratches */
+		repeating-linear-gradient(
+			-25deg,
+			rgba(255,150,150,0.12) 0,
+			rgba(255,150,150,0.12) 1px,
+			transparent 2px,
+			transparent 8px
+		),
+		repeating-linear-gradient(
+			30deg,
+			rgba(200,80,80,0.1) 0,
+			rgba(200,80,80,0.1) 1px,
+			transparent 2px,
+			transparent 10px
+		);
+
+	mix-blend-mode: multiply;
+	opacity: 1;
+}
+
+/* ===== CANVAS ===== */
+
+.canvas {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: #6ac39a;
+	overflow: hidden;
+	outline: 3px solid #111;
+	outline-offset: -3px;
+}
+
+/* ===== painterly noise ===== */
+
+.canvas::before,
+.canvas::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.canvas::before {
+	background: 
+		repeating-radial-gradient(
+			circle at 30% 35%,
+			rgba(255,255,255,0.05) 0,
+			rgba(255,255,255,0.05) 1px,
+			transparent 4px,
+			transparent 6px
+		);
+		opacity: .4;
+}
+
+.canvas::after {
+	background: linear-gradient(
+		45deg,
+		rgba(0,0,0,0.05) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(0,0,0,0.05) 50%,
+		rgba(0,0,0,0.05) 75%,
+		transparent 75%
+	);
+	background-size: 6px 6px;
+	opacity: .15;
+}
+
+/* ===== STEM ===== */
+
+.stem {
+	position: absolute;
+	bottom: 38px;
+	left: 47%;
+	width: 42px;
+	height: 48%;
+	z-index: 1;
+
+	/* organic silhouette */
+	
+	clip-path: polygon(
+		40% 0%,
+		60% 0%,
+		68% 30%,
+		62% 55%,
+		58% 75%,
+		55% 100%,
+		45% 100%,
+		42% 75%,
+		38% 55%,
+		32% 30%
+	);
+
+	/* painterly shading */
+	background: linear-gradient(
+		to right,
+		#0e0e0e 0%,
+		#1a1a1a 35%,
+		#0c0c0c 65%,
+		#000 100%
+	);
+
+	box-shadow:
+		0 0 12px rgba(0,0,0,.45),
+		inset 2px 0 4px rgba(255,255,255,.05),
+		inset -2px 0 6px rgba(0,0,0,.35);
+}
+
+.stem {
+	border-radius: 8px;
+	transform: translateX(-40%) rotate(-0.9deg);
+}
+
+.stem::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		to right,
+		rgba(255,255,255,.08),
+		transparent 40%,
+		rgba(0,0,0,.03)
+	);
+}
+
+/* ===== LEAVES ===== */
+
+.leaf-wrap {
+	position: absolute;
+	z-index: 2;
+}
+
+.leaf-border,
+.leaf {
+	position: absolute;
+	width: 85px;
+	height: 35px;
+	clip-path: polygon(0 50%, 50% 0, 100% 50%, 50% 100%);
+	z-index: 4;
+}
+
+.leaf-border {
+	background: #111;
+	transform: scale(1.3) rotate(-5deg);
+}
+
+.leaf {
+	background: linear-gradient(135deg,  #a01d1d, #2e0808);
+}
+
+/* leaf positions */
+
+.leaf-wrap.left {
+	left: 17%;
+	bottom: 45%;
+	transform: rotate(-20deg);
+	z-index: 2;
+}
+
+.leaf-wrap.right-top {
+	left: 54%;
+	bottom: 54%;
+	transform: rotate(5deg) scaleX(1);
+}
+
+.leaf-wrap.right-bottom {
+	left: 56%;
+	bottom: 52%;
+	transform: rotate(52deg) scaleX(1.25);
+}
+
+/* ===== FLOWER ===== */
+
+.flower {
+	position: absolute;
+	left: 44%;
+	top: 16%;
+	width: 110px;
+	height: 110px;
+	transform: translateX(-50%) rotate(-1.5deg);
+	z-index: 3;
+}
+
+/* ===== PETALS OUTER ===== */
+
+.petal-wrap {
+	position: absolute;
+}
+
+.petal-border,
+.petal {
+	position: absolute;
+	width: 85px;
+	height: 85px;
+	clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.petal-border {
+	background: #111;
+	transform: scale(1.08) rotate(-12deg);
+}
+
+.petal {
+	background: radial-gradient(circle at 30% 20%, #d01a1a, #880606 70%);
+}
+
+
+/* cardinal outer petals */
+
+.petal-wrap.top { 
+	top: 8px; 
+	left: 50%; 
+	transform: translateX(-50%); 
+}
+
+.petal-wrap.bottom { 
+	bottom: 8px; 
+	left: 50%; 
+	transform: translateX(-50%) rotate(180deg); 
+}
+
+.petal-wrap.left { 
+	left: 8px; 
+	top: 50%; 
+	transform: translateY(-50%) rotate(-93deg); 
+}
+
+.petal-wrap.right { 
+	right: 8px; 
+	top: 50%;
+	transform: translateY(-50%) rotate(88deg); 
+}
+
+/* diagonal outer petals */
+
+.petal-wrap.diag1,
+.petal-wrap.diag2,
+.petal-wrap.diag3,
+.petal-wrap.diag4 {
+	transform: scale(1);
+}
+
+.petal-wrap.diag1 { 
+	top: 26px; 
+	left: 26px; 
+	transform: rotate(-45deg) scale(0.8); 
+}
+
+.petal-wrap.diag2 { 
+	top: 26px; 
+	right: 26px; 
+	transform: rotate(45deg) scale(0.7); 
+}
+
+.petal-wrap.diag3 { 
+	bottom: 26px; 
+	left: 26px; 
+	transform: rotate(-135deg) scale(0.8); 
+}
+
+.petal-wrap.diag4 { 
+	bottom: 26px; 
+	right: 26px; 
+	transform: rotate(135deg) scale(0.6); 
+}
+
+/* ===== PETALS INNER ===== */
+
+.inner .petal-border,
+.inner .petal {
+	width: 56px;
+	height: 56px;
+}
+
+.petal-wrap.inner.top { top: 60px; left: 50%; transform: translateX(-50%); }
+.petal-wrap.inner.left { left: 60px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+.petal-wrap.inner.right { right: 60px; top: 50%; transform: translateY(-50%) rotate(90deg) scale(0.05); }
+.petal-wrap.inner.bottom { bottom: 60px; left: 50%; transform: translateX(-50%) rotate(180deg) scale(0.02); }
+
+/* ===== CORE ===== */
+
+.core-border,
+.core {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 24px;
+	height: 24px;
+	transform: translate(-50%, -50%) rotate(-8deg);
+}
+
+.core-border {
+	background: #111;
+	transform: translate(-50%, -50%) scale(1.2) rotate(-17deg);
+}
+
+.core {
+	background: radial-gradient(circle at 30% 20%, #4e0909, #6e0707 70%);
+}
+
+	</style>
+</head>
+
+<body>
+	<div class="frame">
+		<div class="canvas">
+
+			<div class="stem"></div>
+
+	<!-- leaves -->
+	<div class="leaf-wrap left">
+		<div class="leaf-border"></div>
+		<div class="leaf"></div>
+		</div>
+
+	<div class="leaf-wrap right-top">
+		<div class="leaf-border"></div>
+		<div class="leaf"></div>
+		</div>
+
+	<div class="leaf-wrap right-bottom">
+		<div class="leaf-border"></div>
+		<div class="leaf"></div>
+		</div>
+
+	 <!-- flower -->
+	  <div class="flower">
+
+	<!-- outer petals -->
+	 	
+		<div class="petal-wrap top"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap bottom"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap left"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap right"><div class="petal-border"></div><div class="petal"></div></div>	
+    	<div class="petal-wrap d1"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap d2"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap d3"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap d4"><div class="petal-border"></div><div class="petal"></div></div>
+
+	 <!-- inner petals -->
+		<div class="petal-wrap inner top"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap inner bottom"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap inner left"><div class="petal-border"></div><div class="petal"></div></div>
+    	<div class="petal-wrap inner right"><div class="petal-border"></div><div class="petal"></div></div>
+
+	  <!-- core -->
+	   <div class="core-border"></div>
+	   <div class="core"></div>
+
+	  </div>
+	</div>
+</div>
+</body>
+</html>
