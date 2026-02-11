@@ -21,18 +21,7 @@
         gap: 20px;
     }
 
-    #btnFlip {
-        width: 200px;
-        padding: 12px;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s ease;
-    }
-
-    #btnHeads {
+        #btnHeads {
         background-color: #4CAF50;
         color: white;
     }
@@ -103,7 +92,7 @@
             alert("You guessed wrong, so game over for you!");
         }
 
-            //After 1.0 seconds, return to neutral
+            //After 1.2 seconds, return to neutral
             setTimeout(() => {
                 coinImg.src = "images/neutral.png";
 
@@ -111,9 +100,9 @@
                 flipHeads.disabled = false;
                 flipTails.disabled = false;
 
-            }, 1000);
+            }, 1200);
 
-        }, 500); // small delay before revealing result
+        }, 600); // small delay before revealing result
     
         }        
         
