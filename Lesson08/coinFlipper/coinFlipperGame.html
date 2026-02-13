@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Coin Flipper</title>
 
     <style>
         main {
@@ -80,7 +80,7 @@
               });
 
         flipTails.addEventListener("click", () => {
-            handleFlip("Tails");
+            handleFlip("tails");
 
               });
 
@@ -93,22 +93,42 @@
 
             coinImg.classList.add("spinAnimation");
 
+            setTimeout(function(){
+
             if (roundedNumber == 0){
 
-                if (playerGuess = "heads"){}
                 coinImg.src = "images/heads.png";
+
+                if (playerGuess == "heads"){
                 score ++;
                 alert('You guessed right, keep going! Your current score is: ' + score);
 
-            } else if (roundedNumber = 1) {
+            } else {
+                score = 0;
+                alert('You guessed wrong, so game Over for you!');
+            }
+
+
+
+            } else if (roundedNumber == 1){
 
                 
                 coinImg.src = "images/tails.png";
-                score = 0;
 
-                alert('You guessed wrong, so Game Over for you!');
-        }
-            
+                if (playerGuess == "tails"){
+
+                    score ++;
+                    alert('You guessed right, keep going! Your current score is: ' + score);
+
+            } else {
+                score = 0;
+                    alert('You guessed wrong, so Game Over for you!');
+                }
+            }
+                coinImg.classList.remove("spinAnimation");
+
+
+                }, 500);
                 
             }
 
