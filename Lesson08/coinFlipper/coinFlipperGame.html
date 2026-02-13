@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,14 +37,19 @@
         }
 
         @keyframes spin {
-            from {transform: rotateY(0deg);}
-            to {transform: rotateY(720deg);}
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(720deg);
+            }
 
         }
-
     </style>
 
 </head>
+
 <body>
 
     <main>
@@ -59,7 +65,7 @@
 
         </div>
 
-     
+
 
         <img id="coin" src="images/neutral.png" alt="coin">
 
@@ -77,65 +83,66 @@
         flipHeads.addEventListener("click", () => {
             handleFlip("heads");
 
-              });
+        });
 
         flipTails.addEventListener("click", () => {
             handleFlip("tails");
 
-              });
+        });
 
-        function handleFlip(playerGuess){
+        function handleFlip(playerGuess) {
 
             let randomNumber = Math.random();
             let roundedNumber = Math.round(randomNumber);
-            
+
             console.log(roundedNumber);
 
             coinImg.classList.add("spinAnimation");
 
-            setTimeout(function(){
+            setTimeout(function () {
 
-            if (roundedNumber == 0){
+                if (roundedNumber == 0) {
 
-                coinImg.src = "images/heads.png";
+                    coinImg.src = "images/heads.png";
 
-                if (playerGuess == "heads"){
-                score ++;
-                alert('You guessed right, keep going! Your current score is: ' + score);
+                    if (playerGuess == "heads") {
+                        score++;
+                        alert('You guessed right, keep going! Your current score is: ' + score);
 
-            } else {
-                score = 0;
-                alert('You guessed wrong, so game Over for you!');
-            }
+                    } else {
+                        score = 0;
+                        alert('You guessed wrong, so game Over for you!');
+                    }
 
 
 
-            } else if (roundedNumber == 1){
+                } else if (roundedNumber == 1) {
 
-                
-                coinImg.src = "images/tails.png";
 
-                if (playerGuess == "tails"){
+                    coinImg.src = "images/tails.png";
 
-                    score ++;
-                    alert('You guessed right, keep going! Your current score is: ' + score);
+                    if (playerGuess == "tails") {
 
-            } else {
-                score = 0;
-                    alert('You guessed wrong, so Game Over for you!');
+                        score++;
+                        alert('You guessed right, keep going! Your current score is: ' + score);
+
+                    } else {
+                        score = 0;
+                        alert('You guessed wrong, so Game Over for you!');
+                    }
                 }
-            }
                 coinImg.classList.remove("spinAnimation");
 
 
-                }, 500);
-                
-            }
+            }, 500);
+
+        }
 
 
 
     </script>
 
-    
+
 </body>
+
 </html>
