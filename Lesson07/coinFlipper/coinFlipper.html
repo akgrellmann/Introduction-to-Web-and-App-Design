@@ -84,15 +84,17 @@
                 coinImg.src="images/tails.png";
             }
 
+            setTimeout(() => {
             if (userGuess == result) {
-                score++;
-                alert(`You guessed right, keep going! Score: ${score}`);
+            score++;
+            alert(`You guessed right, keep going! Score: ${score}`);
             } else {
             score = 0;
             alert("You guessed wrong, so game over for you!");
-        }
+            }
+            }, 100);
 
-            //After 1.2 seconds, return to neutral
+            //After 1.5 seconds, return to neutral
             setTimeout(() => {
                 coinImg.src = "images/neutral.png";
 
@@ -100,7 +102,7 @@
                 flipHeads.disabled = false;
                 flipTails.disabled = false;
 
-            }, 1200);
+            }, 1500);
 
         }, 600); // small delay before revealing result
     
