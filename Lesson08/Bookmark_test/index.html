@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,10 @@
 
     <style>
         :root {
-             --bg-gradient-start: #0F172A;
-             --bg-gradient-mid: #0B1F2A;
-             --bg-gradient-end: #070D1A;
-           
+            --bg-gradient-start: #0F172A;
+            --bg-gradient-mid: #0B1F2A;
+            --bg-gradient-end: #070D1A;
+
             --bg-page: #b5dbd3;
             --bg-card: #13131A;
 
@@ -26,22 +27,18 @@
 
         html {
             scroll-behavior: smooth;
-        } 
+        }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: radial-gradient(
-                circle at top,
-                rgba(105, 188, 142, 0.08),
-                transparent 40%
-            ),
-            linear-gradient(
-                to bottom,
-                var(--bg-gradient-start),
-                var(--bg-gradient-mid),
-                var(--bg-gradient-end)
-            );
-            
+            background: radial-gradient(circle at top,
+                    rgba(105, 188, 142, 0.08),
+                    transparent 40%),
+                linear-gradient(to bottom,
+                    var(--bg-gradient-start),
+                    var(--bg-gradient-mid),
+                    var(--bg-gradient-end));
+
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -56,8 +53,9 @@
 
         .main {
             margin-top: 0;
-            color: var(--accent-pink);
-            text-align: center;
+            color: var(--accent-green);
+            text-align:left;
+            padding: 28px;
         }
 
         .main h2 {
@@ -68,10 +66,11 @@
 
         /* Container Grid */
 
-         .container {
+        .container {
             padding-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /*4 columns*/
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            /*4 columns*/
             gap: 20px;
             max-width: 1600px;
             margin: 0 auto;
@@ -79,11 +78,13 @@
 
         /* Category Card */
 
-       .category {
+        .category {
             position: relative;
             border-radius: 15px;
-            background-color: var(--bg-card); /* REAL solid background */
-            border: 1.5px solid transparent; /* Gradient border */
+            background-color: var(--bg-card);
+            /* REAL solid background */
+            border: 1.5px solid transparent;
+            /* Gradient border */
             background-image:
                 linear-gradient(var(--bg-card), var(--bg-card)),
                 linear-gradient(135deg, var(--accent-green), var(--accent-green-soft));
@@ -107,11 +108,9 @@
             border-radius: 15px;
             opacity: 0;
             transition: opacity 0.25s ease;
-            background: linear-gradient(
-                        to bottom,
-                        rgba(105, 188, 142, 0.08),
-                        transparent 10%
-                        );
+            background: linear-gradient(to bottom,
+                    rgba(105, 188, 142, 0.08),
+                    transparent 10%);
             pointer-events: none;
         }
 
@@ -125,7 +124,7 @@
 
         .category:hover:not(:focus-within) {
             transform: translateY(-4px);
-            box-shadow: 
+            box-shadow:
                 0 0 0 1px rgba(105, 188, 142, 0.25),
                 0 8px 24px rgba(105, 188, 142, 0.25);
         }
@@ -149,11 +148,9 @@
             width: 100%;
             height: 1.5px;
 
-            background: linear-gradient(
-                to right,
-                #69BC8E,
-                rgba(105, 188, 142, 0.4)
-            );
+            background: linear-gradient(to right,
+                    #69BC8E,
+                    rgba(105, 188, 142, 0.4));
         }
 
         .category-title h3 {
@@ -185,179 +182,207 @@
             color: var(--accent-yellow);
             padding-left: 6px;
         }
-
-        
     </style>
 </head>
 
 <body>
 
-<header> 
-    <div class="main">
-        <h3></h3>
-    </div> 
-</header> <br>
+    <header>
+        <div class="main">
+            <h3>
+                <label>Search:</label> <input id="search" type="text">
+            </h3>
+        </div>
+    </header> 
 
-<div class="container">
+    <div class="container">
 
-<div class="category">
-<div class="category-title">
-    <h3>TAMK</h3>
-</div>
-<ul>
-    <li><a href="">Moodle</a></li>
-    <li><a href="">Pakki</a></li>
-    <li><a href="">Kela</a></li>
-    <li><a href="">Outlook</a></li>
-    <li><a href="">OneDrive</a></li>
-    <li><a href="">KideApp</a></li>
-    <li><a href="">FHSH - YTHS (health)</a></li>
-    <li><a href="">JobTeaser</a></li>
-    <li><a href="">Koppari</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>TAMK</h3>
+            </div>
+            <ul>
+                <li><a href="https://moodle.tuni.fi/">Moodle</a></li>
+                <li><a href="https://peppi-student.tuni.fi">Pakki</a></li>
+                <li><a href="">Kela</a></li>
+                <li><a href="https://www.outlook.com">Outlook</a></li>
+                <li><a href="http://www.onedrive.com">OneDrive</a></li>
+                <li><a href="">KideApp</a></li>
+                <li><a href="https://www.yths.fi/en/frontpage/">FHSH - YTHS (health)</a></li>
+                <li><a href="http://www.jobteaser.com">JobTeaser</a></li>
+                <li><a href="https://www.koppari.fi/tamk/?lang=en">Koppari</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>ENTERTAINMENT</h3>
-</div>
-<ul>
-    <li><a href="https://mubi.com/">MUBI</a></li>
-    <li><a href="https://www.netflix.com/browse">Netflix</a></li>
-    <li><a href="https://www.primevideo.com/">PrimeVideo</a></li>
-    <li><a href="https://www.disneyplus.com/pt-br/home">Disney+</a></li>
-    <li><a href="https://play.hbomax.com">HBOGo</a></li>
-    <li><a href="https://assista.itauculturalplay.com.br/Home">Itau Cultural</a></li>
-    <li><a href="https://www.kanopy.com/en/tuni/">Kanopy</a></li>
-    <li><a href="https://cineminhazumbacana.wordpress.com/outros/">Zumbacana</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>ENTERTAINMENT</h3>
+            </div>
+            <ul>
+                <li><a href="https://mubi.com/">MUBI</a></li>
+                <li><a href="https://www.netflix.com/browse">Netflix</a></li>
+                <li><a href="https://www.primevideo.com/">PrimeVideo</a></li>
+                <li><a href="https://www.disneyplus.com/pt-br/home">Disney+</a></li>
+                <li><a href="https://play.hbomax.com">HBOGo</a></li>
+                <li><a href="https://assista.itauculturalplay.com.br/Home">Itau Cultural</a></li>
+                <li><a href="https://www.kanopy.com/en/tuni/">Kanopy</a></li>
+                <li><a href="https://cineminhazumbacana.wordpress.com/outros/">Zumbacana</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>3D STUFF</h3>
-</div>
-<ul>
-    <li><a href="https://gumroad.com/">Gumroad</a></li>
-    <li><a href="https://polyhaven.com">PolyHaven</a></li>
-    <li><a href="https://www.mixamo.com/#/">Mixamo</a></li>
-    <li><a href="https://www.thebasemesh.com/model-library">The Base Mesh</a></li>
-    <li><a href="https://extensions.blender.org/add-ons/">Blender Add-ons</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>3D STUFF</h3>
+            </div>
+            <ul>
+                <li><a href="https://gumroad.com/">Gumroad</a></li>
+                <li><a href="https://polyhaven.com">PolyHaven</a></li>
+                <li><a href="https://www.mixamo.com/#/">Mixamo</a></li>
+                <li><a href="https://www.thebasemesh.com/model-library">The Base Mesh</a></li>
+                <li><a href="https://extensions.blender.org/add-ons/">Blender Add-ons</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-    <div class="category-title">
-    <h3>GAMEDEV STUFF</h3>
-</div>
-<ul>
-    <li><a href="https://editor.construct.net">Construct 3</a></li>
-    <li><a href="https://github.com/">GitHub</a></li>
-    <li><a href="https://color.adobe.com">Adobe Color</a></li>
-    <li><a href="https://orama-interactive.itch.io/pixelorama">Pixelorama</a></li>
-    <li><a href="https://quaternius.com/index.html">Quaternius Assets</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>GAMEDEV STUFF</h3>
+            </div>
+            <ul>
+                <li><a href="https://editor.construct.net">Construct 3</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="https://color.adobe.com">Adobe Color</a></li>
+                <li><a href="https://orama-interactive.itch.io/pixelorama">Pixelorama</a></li>
+                <li><a href="https://quaternius.com/index.html">Quaternius Assets</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>USEFULL STUFF</h3>
-</div>
-<ul>
-    <li><a href="https://www.dafont.com">Dafont</a></li>
-    <li><a href="https://trueref.io">TrueRef</a></li>
-    <li><a href="https://www.posemaniacs.com">PoseManiacs</a></li>
-    <li><a href="https://film-grab.com">FilmGrab</a></li>
-    <li><a href="https://animationscreencaps.com">Animation Screencaps</a></li>
-    <li><a href="https://www.mapcrunch.com/">MapCrunch</a></li>
-    <li><a href="https://characterdesignreferences.com/home">CharacterDesignRef</a></li>
-    <li><a href="https://www.ctrlpaint.com/library">CtrlPaint</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>USEFULL STUFF</h3>
+            </div>
+            <ul>
+                <li><a href="https://www.dafont.com">Dafont</a></li>
+                <li><a href="https://trueref.io">TrueRef</a></li>
+                <li><a href="https://www.posemaniacs.com">PoseManiacs</a></li>
+                <li><a href="https://film-grab.com">FilmGrab</a></li>
+                <li><a href="https://animationscreencaps.com">Animation Screencaps</a></li>
+                <li><a href="https://www.mapcrunch.com/">MapCrunch</a></li>
+                <li><a href="https://characterdesignreferences.com/home">CharacterDesignRef</a></li>
+                <li><a href="https://www.ctrlpaint.com/library">CtrlPaint</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>MY STUFF</h3>
-</div>
-<ul>
-    <li><a href="https://portfolio.adobe.com/">Portfolio</a></li>
-    <li><a href="https://www.instagram.com">Instagram</a></li>
-    <li><a href="https://www.behance.net">Behance</a></li>
-    <li><a href="https://www.artstation.com/">Artstation</a></li>
-    <li><a href="https://gmail.com">Gmail</a></li>
-    <br>
-    <li><a href="https://www.scribd.com/saved">Scribd</a></li>
-    <li><a href="https://www.pinterest.com/">Pinterest</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>MY STUFF</h3>
+            </div>
+            <ul>
+                <li><a href="https://www.akgrellmann.com/">Portfolio</a></li>
+                <li><a href="https://www.instagram.com/akgrellmann/">Instagram</a></li>
+                <li><a href="https://www.behance.net/akgrellmann/">Behance</a></li>
+                <li><a href="https://www.artstation.com/akgrellmann/">Artstation</a></li>
+                <li><a href="https://gmail.com">Gmail</a></li>
+                <br>
+                <li><a href="https://www.scribd.com/saved">Scribd</a></li>
+                <li><a href="https://www.pinterest.com/">Pinterest</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>COURSES</h3>
-</div>
-<ul>
-    <li><a href="https://www.domestika.org/">Domestika</a></li>
-    <li><a href="https://hotmart.com/pt-br/club/3dnarevo/products/6339847">Revo - 3D</a></li>
-    <li><a href="https://hotmart.com/pt-br/club/revocursos/products/3490417">Revo - 2D Animation</a></li>
-    <li><a href="https://courses.yellowbrick.co/">Yellowbrick - Animation</a></li>
-    <li><a href="https://schoolism.com/s/tutorial/library">Schoolism</a></li>
-    <li><a href="https://www.khanacademy.org/profile/me/courses">Khan Academy</a></li>
-    <li><a href="https://lospec.com/pixel-art-tutorials">Pixel School</a></li>
-    <li><a href="https://www.coursera.org/specializations/game-design-and-development">Coursera - Game Design</a></li>
-    <li><a href="">AldeiaCC</a></li>
-    <li><a href="https://hotmart.com/pt-br/club/omicronfotografia/products/367093?access_source=hub_home_product_card">Omicron</a></li>
-    <li><a href="https://courses.reallusion.com/">Reallusion Courses</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>COURSES</h3>
+            </div>
+            <ul>
+                <li><a href="https://www.domestika.org/">Domestika</a></li>
+                <li><a href="https://hotmart.com/pt-br/club/3dnarevo/products/6339847">Revo - 3D</a></li>
+                <li><a href="https://hotmart.com/pt-br/club/revocursos/products/3490417">Revo - 2D Animation</a></li>
+                <li><a href="https://courses.yellowbrick.co/">Yellowbrick - Animation</a></li>
+                <li><a href="https://schoolism.com/s/tutorial/library">Schoolism</a></li>
+                <li><a href="https://www.khanacademy.org/profile/me/courses">Khan Academy</a></li>
+                <li><a href="https://lospec.com/pixel-art-tutorials">Pixel School</a></li>
+                <li><a href="https://www.coursera.org/specializations/game-design-and-development">Coursera - Game
+                        Design</a></li>
+                <li><a href="https://cursos.aldeia.cc/">AldeiaCC</a></li>
+                <li><a
+                        href="https://hotmart.com/pt-br/club/omicronfotografia/products/367093?access_source=hub_home_product_card">Omicron</a>
+                </li>
+                <li><a href="https://courses.reallusion.com/">Reallusion Courses</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>NEWS</h3>
-</div>
-<ul>
-    <li><a href="">NYTimes</a></li>
-    <li><a href="">G1</a></li>
-    <li><a href="">CNN</a></li>
-    <li><a href="">Yle</a></li>
-    <li><a href="">Aamulehti</a></li>
-    <li><a href="">Folha de S.Paulo</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>NEWS</h3>
+            </div>
+            <ul>
+                <li><a href="https://www.nytimes.com/">NYTimes</a></li>
+                <li><a href="https://g1.globo.com/">G1</a></li>
+                <li><a href="https://edition.cnn.com/">CNN</a></li>
+                <li><a href="https://yle.news/">Yle</a></li>
+                <li><a href="https://www.aamulehti.fi/">Aamulehti</a></li>
+                <li><a href="https://www.aamulehti.fi/">Folha de S.Paulo</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>FINNISH PRACTICE</h3>
-</div>
-<ul>
-    <li><a href="https://langpractice.com/finnish/numbers/listening#1,0,10">Numbers</a></li>
-    <li><a href="https://www.duolingo.com/learn">Duolingo</a></li>
-    <li><a href="https://start-to-finnish-students.in.howspace.com/?path=%2Fwelcome">Start to Finnish Course</a></li>
-    <li><a href="https://infofinland.fi/en/work-and-enterprise">InfoFinland</a></li>
-    <li><a href="https://www.kielibuusti.fi/en/learn-finnish">Kielibuusti</a></li>
-    <li><a href="http://www.thefinnishteacher.com">Finnish Teacher Blog</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>FINNISH PRACTICE</h3>
+            </div>
+            <ul>
+                <li><a href="https://langpractice.com/finnish/numbers/listening#1,0,10">Numbers</a></li>
+                <li><a href="https://www.duolingo.com/learn">Duolingo</a></li>
+                <li><a href="https://start-to-finnish-students.in.howspace.com/?path=%2Fwelcome">Start to Finnish
+                        Course</a></li>
+                <li><a href="https://infofinland.fi/en/work-and-enterprise">InfoFinland</a></li>
+                <li><a href="https://www.kielibuusti.fi/en/learn-finnish">Kielibuusti</a></li>
+                <li><a href="http://www.thefinnishteacher.com">Finnish Teacher Blog</a></li>
+            </ul>
+        </div>
 
-<div class="category">
-<div class="category-title">
-    <h3>ART NEWS</h3>
-</div>
-<ul>
-    <li><a href="https://williammur.substack.com/">Will Mur Substack</a></li>
-    <li><a href="https://www.blendernation.com/">BlenderNation</a></li>
-    <li><a href="https://blenderartists.org/?ref=bn">BlenderArtists</a></li>
-    <li><a href="https://www.newyorker.com">The New Yorker</a></li>
-    <li><a href="https://piaui.folha.uol.com.br/">Revista Piauí</a></li>
-    <li><a href="https://www1.folha.uol.com.br/ilustrada/">Folha Ilustrada</a></li>
-</ul>
-</div>
+        <div class="category">
+            <div class="category-title">
+                <h3>ART NEWS</h3>
+            </div>
+            <ul>
+                <li><a href="https://williammur.substack.com/">Will Mur Substack</a></li>
+                <li><a href="https://www.blendernation.com/">BlenderNation</a></li>
+                <li><a href="https://blenderartists.org/?ref=bn">BlenderArtists</a></li>
+                <li><a href="https://www.newyorker.com">The New Yorker</a></li>
+                <li><a href="https://piaui.folha.uol.com.br/">Revista Piauí</a></li>
+                <li><a href="https://www1.folha.uol.com.br/ilustrada/">Folha Ilustrada</a></li>
+                <li><a href="https://www.termometrooscar.com">Termômetro Oscar</a></li>
+            </ul>
+        </div>
 
-<script>
-  document.querySelectorAll('.category a[href]').forEach(link => {
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-  });
-</script>
+        <script>
+
+            // new part - search button - did in class:
+
+            const searchInput = document.querySelector('#search');
+
+            const items = document.querySelectorAll('.category a');
+
+            searchInput.addEventListener("input", ()=> {
+                let searchterm =searchInput.value.toLowerCase();
+                console.log(searchterm);
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(searchterm)){
+                        item.style.display = "block";
+                    } else {
+                        item.style.display = "none";
+                    }
+                }); // we are looking through the collection of links; we are calling each individual link "item"; and then we are doing something for each item (link)
+            });
+
+            //this was the part that I put before and it is working:
+            document.querySelectorAll('.category a[href]').forEach(link => {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            });
+
+        </script>
 
 </body>
+
 </html>
