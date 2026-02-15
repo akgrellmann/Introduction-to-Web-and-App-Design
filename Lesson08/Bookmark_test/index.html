@@ -51,11 +51,16 @@
 
         /* header */
 
+         header {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
         .main {
             margin-top: 0;
             color: var(--accent-green);
-            text-align:left;
-            padding: 28px;
+            text-align: left;
+            padding: 0 20px;
         }
 
         .main h2 {
@@ -64,6 +69,7 @@
             letter-spacing: 0.5px;
         }
 
+       
         /* Container Grid */
 
         .container {
@@ -182,6 +188,23 @@
             color: var(--accent-yellow);
             padding-left: 6px;
         }
+
+        .category textarea {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: none;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .category textarea::placeholder {
+            color: var(--text-muted);
+        }
+
     </style>
 </head>
 
@@ -193,7 +216,7 @@
                 <label>Search:</label> <input id="search" type="text">
             </h3>
         </div>
-    </header> 
+    </header>
 
     <div class="container">
 
@@ -354,6 +377,13 @@
             </ul>
         </div>
 
+        <div class="category notes">
+            <div class="category-title">
+                <h3>NOTES</h3>
+            </div>
+            <textarea id="notes" placeholder="Write your notes here..."></textarea>
+        </div>
+
         <script>
 
             // new part - search button - did in class:
@@ -362,12 +392,12 @@
 
             const items = document.querySelectorAll('.category a');
 
-            searchInput.addEventListener("input", ()=> {
-                let searchterm =searchInput.value.toLowerCase();
+            searchInput.addEventListener("input", () => {
+                let searchterm = searchInput.value.toLowerCase();
                 console.log(searchterm);
                 items.forEach(item => {
                     const text = item.textContent.toLowerCase();
-                    if (text.includes(searchterm)){
+                    if (text.includes(searchterm)) {
                         item.style.display = "block";
                     } else {
                         item.style.display = "none";
@@ -379,6 +409,18 @@
             document.querySelectorAll('.category a[href]').forEach(link => {
                 link.setAttribute('target', '_blank');
                 link.setAttribute('rel', 'noopener noreferrer');
+            });
+
+            //this is for the notes:
+            const textInput = document.querySelector("#notes");
+
+                const saved = localStorage.getItem('myNotes');
+                if (saved) {
+                    textInput.value = saved;
+                }
+            
+            textInput.addEventListener('input', () => {
+                localStorage.setItem('myNotes', textInput.value);
             });
 
         </script>
