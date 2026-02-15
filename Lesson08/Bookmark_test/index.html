@@ -51,7 +51,7 @@
 
         /* header */
 
-         header {
+        header {
             max-width: 1600px;
             margin: 0 auto;
         }
@@ -69,7 +69,7 @@
             letter-spacing: 0.5px;
         }
 
-       
+
         /* Container Grid */
 
         .container {
@@ -144,6 +144,9 @@
             position: relative;
             margin-bottom: 12px;
             padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .category-title::after {
@@ -160,7 +163,7 @@
         }
 
         .category-title h3 {
-            margin: 0 0 6px;
+            margin: 0;
             color: var(--text-main);
             font-weight: 600;
         }
@@ -205,6 +208,61 @@
             color: var(--text-muted);
         }
 
+
+        .toggle-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-green);
+            background: transparent;
+            color: var(--accent-green);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-btn:hover {
+            background: var(--accent-green);
+            color: black;
+            transform: rotate(90deg);
+        }
+
+        #todoList {
+            margin-top: 10px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .todo-item input[type="text"] {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--accent-green-soft);
+            color: var(--text-main);
+            width: 100%;
+            outline: none;
+        }
+
+        .delete-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-pink);
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.2);
+            opacity: 0.7;
+        }
     </style>
 </head>
 
@@ -380,8 +438,12 @@
         <div class="category notes">
             <div class="category-title">
                 <h3>NOTES</h3>
+                <button id="toggleTodo" class="toggle-btn">+</button>
             </div>
+
             <textarea id="notes" placeholder="Write your notes here..."></textarea>
+
+            <div id="todoList"></div>
         </div>
 
         <script>
@@ -413,15 +475,104 @@
 
             //this is for the notes:
             const textInput = document.querySelector("#notes");
+            const todoList = document.querySelector("#todoList");
+            const toggleBtn = document.querySelector("#toggleTodo");
 
-                const saved = localStorage.getItem('myNotes');
-                if (saved) {
-                    textInput.value = saved;
-                }
-            
-            textInput.addEventListener('input', () => {
-                localStorage.setItem('myNotes', textInput.value);
+            // ------ LOAD TEXT ------
+
+            const savedText = localStorage.getItem("myNotesText");
+            if (savedText) textInput.value = savedText;
+
+            // ------ LOAD TODOS ------
+
+            const savedTodos = JSON.parse(localStorage.getItem("myTodos")) || [];
+            savedTodos.forEach(todo => createTodo(todo.text, todo.checked));
+
+            // ------ SAVE TEXT ------
+
+            textInput.addEventListener("input", () => {
+                localStorage.setItem("myNotesText", textInput.value);
             });
+
+            // ------ ADD TODO ------
+
+            toggleBtn.addEventListener("click", () => {
+                const isHidden = todoList.style.display === "none";
+
+                if (isHidden) {
+                    todoList.style.display = "block";
+                    toggleBtn.textContent = "-";
+                } else {
+                    todoList.style.display = "none";
+                    toggleBtn.textContent = "+";
+                }
+            });
+
+            // ------ CREATE TODO ------
+            
+            function createTodo(text, checked) {
+                const div = document.createElement("div");
+                div.classList.add("todo-item");
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = checked;
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = text;
+                input.placeholder = "New task...";
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "x";
+                deleteBtn.classList.add("delete-btn");
+
+                checkbox.addEventListener("change", saveTodos);
+                input.addEventListener("input", saveTodos);
+
+                deleteBtn.addEventListener("click", () => {
+                    div.remove();
+                    saveTodos();
+                });
+
+                div.appendChild(checkbox);
+                div.appendChild(input);
+                div.appendChild(deleteBtn);
+
+                todoList.appendChild(div);
+            }
+
+            // create new TODO when pressing Enter inside last input:
+
+            todoList.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    createTodo("", false);
+                    saveTodos();
+
+                    // focus on the new input
+                    const inputs = todoList.querySelectorAll("input[type='text']");
+                    inputs[inputs.length - 1].focus();
+                }
+            })
+
+            // ------ SAVE TODOS ------
+
+            function saveTodos () {
+                const todos = [];
+
+                document.querySelectorAll(".todo-item").forEach(item => {
+                    const checkbox = item.querySelector("input[type='checkbox']");
+                    const input = item.querySelector("input[type='text']");
+
+                    todos.push({
+                        text: input.value,
+                        checked: checkbox.checked
+                    });
+                });
+
+                localStorage.setItem("myTodos", JSON.stringify(todos));
+            }
 
         </script>
 
