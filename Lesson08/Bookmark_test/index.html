@@ -7,6 +7,12 @@
     <title>Grell's Stuff</title>
 
     <style>
+        *,
+        *::before,
+        ::after {
+            box-sizing: border-box;
+        }
+
         :root {
             --bg-gradient-start: #0F172A;
             --bg-gradient-mid: #0B1F2A;
@@ -23,6 +29,8 @@
 
             --accent-pink: #E83E56;
             --accent-yellow: #F9AE30;
+
+            --coloumn-size: 220px;
         }
 
         html {
@@ -53,14 +61,63 @@
 
         header {
             max-width: 1600px;
-            margin: 0 auto;
+            margin: 0 auto 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(var(--coloumn-size), 1fr));
+            gap: 20px;
+        }
+
+        #search {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        #search::placeholder {
+            color: rgba(207, 198, 198, 0.45);
+        }
+
+        .search-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: var(--bg-card);
+            border: 1.5px solid transparent;
+
+            background-image:
+                linear-gradient(var(--bg-card), var(--bg-card)),
+                linear-gradient(135deg, var(--accent-green), var(--accent-green-soft));
+
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .search-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            color: var(--text-muted);
+            opacity: 0.6;
         }
 
         .main {
             margin-top: 0;
             color: var(--accent-green);
             text-align: left;
-            padding: 0 20px;
+            padding: 0;
         }
 
         .main h2 {
@@ -69,13 +126,23 @@
             letter-spacing: 0.5px;
         }
 
+        .main h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main label {
+            color: var(--accent-green);
+        }
+
 
         /* Container Grid */
 
         .container {
             padding-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(var(--coloumn-size), 1fr));
             /*4 columns*/
             gap: 20px;
             max-width: 1600px;
@@ -104,8 +171,6 @@
 
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-
-
 
         .category::before {
             content: "";
@@ -267,12 +332,15 @@
 </head>
 
 <body>
-
     <header>
-        <div class="main">
-            <h3>
-                <label>Search:</label> <input id="search" type="text">
-            </h3>
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none" />
+                    <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <input id="search" type="text" placeholder="Search links...">
+            </div>
         </div>
     </header>
 
@@ -509,7 +577,7 @@
             });
 
             // ------ CREATE TODO ------
-            
+
             function createTodo(text, checked) {
                 const div = document.createElement("div");
                 div.classList.add("todo-item");
@@ -558,7 +626,7 @@
 
             // ------ SAVE TODOS ------
 
-            function saveTodos () {
+            function saveTodos() {
                 const todos = [];
 
                 document.querySelectorAll(".todo-item").forEach(item => {
