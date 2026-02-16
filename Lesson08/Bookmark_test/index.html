@@ -63,8 +63,8 @@
             max-width: 1600px;
             margin: 0 auto 20px auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(var(--coloumn-size), 1fr));
             gap: 20px;
+            align-items: center;
         }
 
         #search {
@@ -81,7 +81,7 @@
         }
 
         .search-container {
-            width: 100%;
+            width: calc(var(--coloumn-size) + 32px);
             border-radius: 15px;
             overflow: hidden;
             background-color: var(--bg-card);
@@ -95,8 +95,8 @@
             background-clip: padding-box, border-box;
 
             padding: 10px 16px;
-            display: flex;
-            align-items: center;
+            box-sizing: border-box;
+            transition: box-shadow 0.25s ease;
         }
 
         .search-wrapper {
@@ -297,6 +297,7 @@
 
         #todoList {
             margin-top: 10px;
+            display: none;
         }
 
         .todo-item {
@@ -313,6 +314,11 @@
             color: var(--text-main);
             width: 100%;
             outline: none;
+        }
+
+        .todo-item input[type="text"].completed {
+            text-decoration: line-through;
+            opacity: 0.6;
         }
 
         .delete-btn {
@@ -555,30 +561,29 @@
 
             const savedTodos = JSON.parse(localStorage.getItem("myTodos")) || [];
             savedTodos.forEach(todo => createTodo(todo.text, todo.checked));
+            ensureEmptyTodo();
+
+            // ------ LOAD TODO LIST STATE ------
+            const todoOpen = localStorage.getItem("todoOpen") === "true";
+            todoList.style.display = todoOpen ? "block" : "none";
+            toggleBtn.textContent = todoOpen ? "-" : "+";
+
+            // ------ TOGGLE TODO LIST ------
+            toggleBtn.addEventListener("click", () => {
+                const isHidden = todoList.style.display === "none";
+                todoList.style.display = isHidden ? "block" : "none";
+                toggleBtn.textContent = isHidden ? "-" : "+";
 
             // ------ SAVE TEXT ------
 
-            textInput.addEventListener("input", () => {
                 localStorage.setItem("myNotesText", textInput.value);
-            });
-
-            // ------ ADD TODO ------
-
-            toggleBtn.addEventListener("click", () => {
-                const isHidden = todoList.style.display === "none";
-
-                if (isHidden) {
-                    todoList.style.display = "block";
-                    toggleBtn.textContent = "-";
-                } else {
-                    todoList.style.display = "none";
-                    toggleBtn.textContent = "+";
-                }
             });
 
             // ------ CREATE TODO ------
 
-            function createTodo(text, checked) {
+            function createTodo(text = "", checked = false, allowEmpty = false) {
+                if (!allowEmpty && text.trim() === "") return;
+
                 const div = document.createElement("div");
                 div.classList.add("todo-item");
 
@@ -591,16 +596,37 @@
                 input.value = text;
                 input.placeholder = "New task...";
 
+                if (checkbox.checked) {
+                    input.classList.add("completed");
+                }
+
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked) {
+                        input.classList.add("completed");
+                    } else {
+                        input.classList.remove("completed");
+                    }
+                    saveTodos();
+                    ensureEmptyTodo();
+                });
+
+                // ------ delete item ------
+
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "x";
                 deleteBtn.classList.add("delete-btn");
 
-                checkbox.addEventListener("change", saveTodos);
-                input.addEventListener("input", saveTodos);
-
                 deleteBtn.addEventListener("click", () => {
                     div.remove();
+                    saveTodos()
+                    ensureEmptyTodo();
+                });
+
+                // ------ update changes ------
+
+                input.addEventListener("input", () => {
                     saveTodos();
+                    ensureEmptyTodo();
                 });
 
                 div.appendChild(checkbox);
@@ -608,6 +634,14 @@
                 div.appendChild(deleteBtn);
 
                 todoList.appendChild(div);
+            }
+
+            // ------ ensure empty todo at end ------
+            function ensureEmptyTodo() {
+                const items = todoList.querySelectorAll(".todo-item input[type='text']");
+                if (items.length === 0 || items[items.length - 1].value.trim() !== "") {
+                    createTodo("", false, true);
+                }
             }
 
             // create new TODO when pressing Enter inside last input:
@@ -632,11 +666,12 @@
                 document.querySelectorAll(".todo-item").forEach(item => {
                     const checkbox = item.querySelector("input[type='checkbox']");
                     const input = item.querySelector("input[type='text']");
-
-                    todos.push({
-                        text: input.value,
-                        checked: checkbox.checked
-                    });
+                    if (input.value.trim() !== "") { // do not save empty tasks //
+                        todos.push({
+                            text: input.value,
+                            checked: checkbox.checked
+                        });
+                    }
                 });
 
                 localStorage.setItem("myTodos", JSON.stringify(todos));
