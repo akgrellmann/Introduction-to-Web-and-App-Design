@@ -57,6 +57,23 @@
             min-height: 100vh;
         }
 
+        body.light-mode {
+            --bg-gradient-start: #f2f2f2;
+            --bg-gradiente-mid: #e6e6e6;
+            --bg-gradient-end: #dcdcdc;
+
+            --bg-card: #ffffff;
+
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+
+            --accent-green: #444444;
+            --accent-green-soft: rgba (0, 0, 0, 0.1);
+
+            --accent-yellow: #333333;
+            --accent-pink: #888888;
+        }
+
         /* header */
 
         header {
@@ -348,6 +365,8 @@
                 <input id="search" type="text" placeholder="Search links...">
             </div>
         </div>
+
+        <button id="themeToggle" class="toggleBtn">☀</button>
     </header>
 
     <div class="container">
