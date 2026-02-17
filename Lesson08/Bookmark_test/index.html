@@ -59,7 +59,7 @@
 
         body.light-mode {
             --bg-gradient-start: #f2f2f2;
-            --bg-gradiente-mid: #e6e6e6;
+            --bg-gradient-mid: #e6e6e6;
             --bg-gradient-end: #dcdcdc;
 
             --bg-card: #ffffff;
@@ -68,7 +68,7 @@
             --text-muted: #555555;
 
             --accent-green: #444444;
-            --accent-green-soft: rgba (0, 0, 0, 0.1);
+            --accent-green-soft: rgba(0, 0, 0, 0.1);
 
             --accent-yellow: #333333;
             --accent-pink: #888888;
@@ -695,6 +695,32 @@
 
                 localStorage.setItem("myTodos", JSON.stringify(todos));
             }
+
+            // ------ THEME TOGGLE ------
+
+            const themeBtn = document.querySelector("themeToggle");
+
+            // load saved theme
+
+            const savedTheme = localStorage.getItem("theme");
+
+            if (savedTheme === "light") {
+                document.body.classList.add("light-mode");
+                themeBtn.textContent = "☾"
+            }
+
+            // change theme
+            themeBtn.addEventListener("click", () => {
+                document.body.classList.toggle("light_mode");
+
+                if (isLight) {
+                    themeBtn.textContent = "☾";
+                    localStorage.setItem("theme", "light");
+                } else {
+                    themeBtn.textContent = "☀";
+                    localStorage.setItem("theme", "dark");
+                }
+            });
 
         </script>
 
