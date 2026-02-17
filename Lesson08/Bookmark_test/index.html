@@ -55,22 +55,24 @@
             padding: 28px;
             margin: 0;
             min-height: 100vh;
+
+            transition: background 0.4s ease, color 0.3s ease;
         }
 
         body.light-mode {
-            --bg-gradient-start: #f2f2f2;
-            --bg-gradient-mid: #e6e6e6;
-            --bg-gradient-end: #dcdcdc;
+            --bg-gradient-start: #e3e3e3;
+            --bg-gradient-mid: #c6c6c6;
+            --bg-gradient-end: #b9b7b7;
 
-            --bg-card: #ffffff;
+            --bg-card: #ecebeb;
 
-            --text-main: #1a1a1a;
-            --text-muted: #555555;
+            --text-main: #5b5555;
+            --text-muted: #7d7878;
 
             --accent-green: #444444;
-            --accent-green-soft: rgba(0, 0, 0, 0.1);
+            --accent-green-soft: rgba(0, 0, 0, 0.06);
 
-            --accent-yellow: #333333;
+            --accent-yellow: #857e7e;
             --accent-pink: #888888;
         }
 
@@ -79,9 +81,10 @@
         header {
             max-width: 1600px;
             margin: 0 auto 20px auto;
-            display: grid;
+            display: flex;
             gap: 20px;
             align-items: center;
+            justify-content: space-between;
         }
 
         #search {
@@ -94,7 +97,7 @@
         }
 
         #search::placeholder {
-            color: rgba(207, 198, 198, 0.45);
+            color: rgba(131, 131, 131, 0.45);
         }
 
         .search-container {
@@ -128,6 +131,12 @@
             margin-right: 12px;
             color: var(--text-muted);
             opacity: 0.6;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .main {
@@ -187,7 +196,9 @@
             max-width: 800px;
 
             transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
+            transition: background 0.3 ease, transform 0.25s ease, box-shadow
+ 0.25 ease;
+       }
 
         .category::before {
             content: "";
@@ -197,7 +208,7 @@
             opacity: 0;
             transition: opacity 0.25s ease;
             background: linear-gradient(to bottom,
-                    rgba(105, 188, 142, 0.08),
+                    var(--accent-green-soft),
                     transparent 10%);
             pointer-events: none;
         }
@@ -213,8 +224,8 @@
         .category:hover:not(:focus-within) {
             transform: translateY(-4px);
             box-shadow:
-                0 0 0 1px rgba(105, 188, 142, 0.25),
-                0 8px 24px rgba(105, 188, 142, 0.25);
+                0 0 0 1px var(--accent-green-soft),
+                0 8px 24px var(--accent-green-soft);
         }
 
         .category:hover:not(:focus-within)::before {
@@ -240,8 +251,8 @@
             height: 1.5px;
 
             background: linear-gradient(to right,
-                    #69BC8E,
-                    rgba(105, 188, 142, 0.4));
+                    var(--accent-green),
+                    var(--accent-green-soft));
         }
 
         .category-title h3 {
@@ -291,7 +302,7 @@
         }
 
 
-        .toggle-btn {
+        .toggleBtn {
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -310,6 +321,64 @@
             background: var(--accent-green);
             color: black;
             transform: rotate(90deg);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-green);
+            background: var(--bg-card);
+            color: var(--accent-green);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+
+        .icon-btn:hover {
+            transform: rotate(15deg);
+        }
+
+        .popup {
+            position: absolute;
+            top: 70px;
+            right: 28px;
+            width: 200px;
+
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+
+            border: 1.5px solid transparent;
+            background-image: 
+                linear-gradient(var(--bg-card), var(--bg-card)),
+                linear-gradient(135deg, var(--accent-green), var(--accent-green-soft));
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+
+            display: none;
+            z-index: 1000;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .popup ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .popup li {
+            margin: 8px 0;
+        }
+
+        .popup a {
+            text-decoration: none;
+            color: var(--accent-yellow);
+        }
+
+        .popup a:hover {
+            text-decoration: underline;
         }
 
         #todoList {
@@ -351,6 +420,21 @@
             transform: scale(1.2);
             opacity: 0.7;
         }
+
+        #themeToggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-green);
+            background: var(--bg-card);
+            color: var(--accent-green);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #themeToggle:hover {
+            transform: rotate(20deg);
+        }
     </style>
 </head>
 
@@ -366,7 +450,20 @@
             </div>
         </div>
 
-        <button id="themeToggle" class="toggleBtn">☀</button>
+        <div class="header-actions">
+            <button id="themeToggle" class="toggleBtn">☀</button>
+            <button id="shopToggle" class="icon-btn">🛒</button>
+        </div>
+        
+
+        <div id="shopPopup" class="popup">
+            <ul>
+                <li><a href= "link here">Store</a></li>
+                <li><a href= "link here">Store</a></li>
+                <li><a href= "link here">Store</a></li>
+            </ul>
+        </div>
+
     </header>
 
     <div class="container">
@@ -698,29 +795,47 @@
 
             // ------ THEME TOGGLE ------
 
-            const themeBtn = document.querySelector("themeToggle");
+            const themeBtn = document.querySelector("#themeToggle");
+
+            function applyTheme(theme) {
+                document.body.classList.toggle("light-mode", theme === "light");
+                themeBtn.textContent = theme === "light" ? "☾" : "☀";
+            } 
 
             // load saved theme
 
-            const savedTheme = localStorage.getItem("theme");
+            const savedTheme = localStorage.getItem("theme") || "dark";
+            applyTheme(savedTheme);
 
-            if (savedTheme === "light") {
-                document.body.classList.add("light-mode");
-                themeBtn.textContent = "☾"
+            // toggle theme
+
+            themeBtn.addEventListener("click", () => {
+                const newTheme =
+                document.body.classList.contains("light-mode") ? "dark" : "light";
+
+                localStorage.setItem("theme", newTheme);
+                applyTheme(newTheme);
+            });
+
+            // ------ SHOP POP-UP ------
+
+            const shopBtn = document.querySelector("#shopToggle");
+            const shopPopup = document.querySelector("#shopPopup");
+
+            shopBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                shopPopup.style.display = 
+                    shopPopup.style.display === "block" ? "none" : "block";
+            });
+
+            // ------ close the pop-up by clicking outside ------
+
+            document.addEventListener("click", (e) => {
+                if (!shopPopup.contains(e.target) && e.target !== shopBtn)
+                shopPopup.style.display = "none";
             }
 
-            // change theme
-            themeBtn.addEventListener("click", () => {
-                document.body.classList.toggle("light_mode");
-
-                if (isLight) {
-                    themeBtn.textContent = "☾";
-                    localStorage.setItem("theme", "light");
-                } else {
-                    themeBtn.textContent = "☀";
-                    localStorage.setItem("theme", "dark");
-                }
-            });
+            );
 
         </script>
 
