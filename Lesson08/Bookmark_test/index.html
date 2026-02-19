@@ -20,6 +20,7 @@
 
             --bg-page: #b5dbd3;
             --bg-card: #13131A;
+            --bg-popup: #242430; 
 
             --text-main: #F2E9E9;
             --text-muted: #CFC6C6;
@@ -35,7 +36,10 @@
             --accent-pink: #E83E56;
             --accent-yellow: #F9AE30;
 
-            --coloumn-size: 220px;
+            --snake-color: #69BC8E;
+            --apple-color: #c62828;
+
+            --column-size: 220px;
         }
 
         html {
@@ -70,6 +74,7 @@
             --bg-gradient-end: #b9b7b7;
 
             --bg-card: #ecebeb;
+            --bg-popup: #f4f4f4;
 
             --text-main: #5b5555;
             --text-muted: #7d7878;
@@ -82,8 +87,15 @@
             --reminder-docked-bg: #8f8f8f;
             --reminder-docked-text: #f8f7f7;
 
+            --snake-color: #777575;
+            --apple-color: #3c3b3b;
+
             --accent-yellow: #857e7e;
             --accent-pink: #888888;
+        }
+
+        body:not(.light-mode) .capybara {
+            display: block;
         }
 
         /* header */
@@ -93,6 +105,7 @@
             max-width: 1600px;
             margin: 0 auto 20px auto;
             display: flex;
+            flex-wrap: nowwrap;
             gap: 20px;
             align-items: center;
             justify-content: space-between;
@@ -112,9 +125,10 @@
         }
 
         .search-container {
-            width: calc(var(--coloumn-size) + 32px);
+            flex: 1 1 auto;
+            min-width: 200px;
+            max-width: 250px;
             border-radius: 15px;
-            overflow: hidden;
             background-color: var(--bg-card);
             border: 1.5px solid transparent;
 
@@ -134,6 +148,7 @@
             display: flex;
             align-items: center;
             width: 100%;
+            min-width: 0;
         }
 
         .search-icon {
@@ -144,12 +159,28 @@
             opacity: 0.6;
         }
 
+       
         .header-actions {
             display: flex;
             align-items: center;
             gap: 4px;
+            flex: 0 0 auto;
         }
 
+        @media (max-width: 500px) {
+            header {
+                flex-wrap: wrap;
+            }
+        }
+
+         .left-header {
+           flex: 0 1 auto;
+           min-width: 50px;
+           max-width: 150px;
+           display: flex;
+           justify-content: center;
+        }
+        
         .main {
             margin-top: 0;
             color: var(--accent-green);
@@ -179,7 +210,7 @@
         .container {
             padding-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(var(--coloumn-size), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(var(--column-size), 1fr));
             /*4 columns*/
             gap: 20px;
             max-width: 1600px;
@@ -207,7 +238,7 @@
             max-width: 800px;
 
             transition: transform 0.25s ease, box-shadow 0.25s ease;
-            transition: background 0.3 ease, transform 0.25s ease, box-shadow 0.25 ease;
+            transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .category::before {
@@ -377,13 +408,14 @@
             right: 28px;
             width: 200px;
 
-            background: var(--bg-card);
+            background: var(--bg-popup);
+            font-size: 0.85rem;
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
 
             border: 1.5px solid transparent;
             background-image:
-                linear-gradient(var(--bg-card), var(--bg-card)),
+                linear-gradient(var(--bg-popup), var(--bg-popup)),
                 linear-gradient(135deg, var(--accent-green), var(--accent-green-soft));
             background-origin: padding-box, border-box;
             background-clip: padding-box, border-box;
@@ -392,6 +424,9 @@
             z-index: 1000;
 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
         .popup ul {
@@ -401,7 +436,7 @@
         }
 
         .popup li {
-            margin: 8px 0;
+            margin: 4px 0;
         }
 
         .popup a {
@@ -602,6 +637,103 @@
             transform: rotate(20deg);
         }
 
+        #booksPopup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .capybara {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: -100px;
+
+            width: 90px;
+            height: 80px;
+
+            background-image: url("gifcapy.gif");
+            background-size: contain;
+            image-rendering: pixelated;
+            
+            animation:
+                moveAcross 120s linear infinite;
+        }
+
+        .capybara::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            filter: blur(3px);
+        }
+
+        @keyframes moveAcross {
+            0% { left: -100px; transform: scale(0.5) scaleX(1); }
+            49%  { left: 100vw; transform: scale(0.5) scaleX(1); }
+            
+            50%  { left: 100vw; transform: scale(0.5) scaleX(-1); }
+            99%  { left: -100px; transform: scale(0.5) scaleX(-1); }
+            
+            100% { left: -100px; transform: scale(0.5) scaleX(1); }
+        }
+
+        .hearts {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.5);
+            width: 40px;
+            display: none;
+            image-rendering: pixelated;
+            pointer-events: none;
+        }
+
+        .hearts.show {
+            display: block;
+            animation: floatUp 2.5s ease forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(0) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-30px) scale(0.5);
+            }
+        }
+
+        #snakeGame {
+            flex: 1;
+            height: 50px;
+            background-color: var(--bg-card);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .snake-container {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+        }
+
+
     </style>
 </head>
 
@@ -620,11 +752,16 @@
             </div>
         </div>
 
-        <div class="bubble-wrap" id="bubbleWrap"></div>
+        <canvas id="snakeGame"></canvas>
 
         <div class="header-actions">
             <button id="themeToggle" class="icon-btn">☀</button>
-            <button id="shopToggle" class="icon-btn">🛒</button>
+            <button id="booksToggle" class="icon-btn">
+               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><title xmlns="">black-book</title><path fill="currentColor" d="m102.594 25.97l90.062 345.78L481.844 395L391.75 49.22zm-18.906 1.593c-30.466 11.873-55.68 53.098-49.75 75.312l3.25 11.78c.667-1.76 1.36-3.522 2.093-5.28C49.19 85.668 65.84 62.61 89.657 50.47l-5.97-22.907zm44.937 18.906l247.813 21.593l80.937 305.156l-249.344-20.064L128.626 46.47zM94.53 69.155c-16.66 10.01-29.916 28.068-38 47.406c-5.245 12.552-8.037 25.64-8.75 36.532l64.814 235.28c.293-.55.572-1.105.875-1.655c10.6-19.254 27.822-37.696 51.124-48.47L94.53 69.156zm74.876 287.563c-17.673 9.067-31.144 23.712-39.562 39c-4.464 8.105-7.262 16.36-8.688 23.75l11.688 42.405l1.625.125c-3.825-27.528 11.382-60.446 41.25-81.03l-6.314-24.25zm26.344 34.03c-32.552 17.26-46.49 52.402-41.844 72.906l289.844 24.53c-5.315-7.75-8.637-17.84-8.594-28.342l-22.562-9.063l46.625-7.31l-13.595-12.97c5.605-6.907 13.688-13.025 24.78-17.656L195.75 390.75z"/></svg>
+            </button>
+            <button id="shopToggle" class="icon-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><title xmlns="">shopping</title><g fill="none"><path d="M39 32H13L8 12h36z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M3 6h3.5L8 12m0 0l5 20h26l5-20z"/><circle cx="13" cy="39" r="3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/><circle cx="39" cy="39" r="3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/></g></svg>
+            </button>
         </div>
 
 
@@ -634,6 +771,11 @@
                 <li><a href="https://www.amazon.de/-/en/">Amazon BR</a></li>
                 <li><a href="https://www.vinted.fi/">Vinted</a></li>
             </ul>
+        </div>
+
+        <div id="bookPopup" class="popup">
+            <ul id="booksList"></ul>
+            <input id="newBookInput" type="text" placeholder="Add a book..." style="width: 100%; margin-top: 8px; padding: 6px; border-radius: 8px; border: 1px solid var(--accent-green); background: var(--bg-card); color: var(--text-main);" />
         </div>
 
     </header>
@@ -836,24 +978,24 @@
             <div id="todoList"></div>
         </div>
 
+        <div class="capybara">
+            <img src="heart.gif" class="hearts" />
+        </div>
+
         <script>
 
-            // new part - search button - did in class:
+           // search button - did in class:
 
             const searchInput = document.querySelector('#search');
 
-            const items = document.querySelectorAll('.category a');
+            const items = document.querySelectorAll('.category li');
 
             searchInput.addEventListener("input", () => {
                 let searchterm = searchInput.value.toLowerCase();
                 console.log(searchterm);
                 items.forEach(item => {
                     const text = item.textContent.toLowerCase();
-                    if (text.includes(searchterm)) {
-                        item.style.display = "block";
-                    } else {
-                        item.style.display = "none";
-                    }
+                    item.style.display = text.includes(searchterm) ? "" : "none";
                 }); // we are looking through the collection of links; we are calling each individual link "item"; and then we are doing something for each item (link)
             });
 
@@ -895,7 +1037,7 @@
 
                 // ------ SAVE TEXT ------
 
-                localStorage.setItem("myNotesText", textInput.value);
+                localStorage.setItem("todoOpen", isHidden);
             });
 
             // ------ CREATE TODO ------
@@ -1040,7 +1182,67 @@
 
             );
 
-            // ------ Selfcare Messages ------
+            // ------ BOOKS TRACKER ------
+
+            const booksBtn = document.querySelector("#booksToggle");
+            const booksPopup = document.querySelector("#bookPopup");
+            const booksList = document.querySelector("#booksList");
+            const newBookInput = document.querySelector("#newBookInput");
+
+            // load saved books:
+            let savedBooks = JSON.parse(localStorage.getItem("booksList")) || [];
+            renderBooks();
+
+            // toggle Popup:
+            booksBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                booksPopup.style.display = booksPopup.style.display === "block" ? "none" : "block";
+            });
+
+            // close Popup when clicking outside:
+            document.addEventListener("click", (e) => {
+                if (!booksPopup.contains(e.target) && e.target !== booksBtn)
+                    booksPopup.style.display = "none";
+            });
+
+            // add book on enter:
+            newBookInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && newBookInput.value.trim() !== "") {
+                    savedBooks.push(newBookInput.value.trim());
+                    localStorage.setItem("booksList", JSON.stringify(savedBooks));
+                    newBookInput.value = "";
+                    renderBooks();
+                }
+            });
+
+            // render books:
+            function renderBooks() {
+                booksList.innerHTML = "";
+                savedBooks.forEach((book, index) => {
+                    const li = document.createElement("li");
+                    li.style.margin = "4px 0";
+                    li.textContent = `${index + 1}. ${book}`;
+
+                    //delete button:
+                    const delBtn = document.createElement("button");
+                    delBtn.textContent = "✖︎";
+                    delBtn.style.marginLeft = "6px";
+                    delBtn.style.cursor = "pointer";
+                    delBtn.style.background = "transparent";
+                    delBtn.style.border = "none";
+                    delBtn.style.color = "var(--accent-pink)";
+                    delBtn.addEventListener("click", () => {
+                        savedBooks.splice(index, 1);
+                        localStorage.setItem("booksList", JSON.stringify(savedBooks));
+                        renderBooks();
+                    });
+
+                    li.appendChild(delBtn);
+                    booksList.appendChild(li);
+                });
+            }
+
+            // ------ SELFCARE MESSAGES ------
 
             const reminders = [
                 "Take a deep breath and relax your shoulders :)",
@@ -1101,6 +1303,131 @@
                 });
 
             }
+
+            // ------ CAPYBARA INTERACTION ------
+
+            const capy = document.querySelector(".capybara");
+            const hearts = document.querySelector(".hearts");
+
+            capy.addEventListener("click", () => {
+                hearts.classList.add("show");
+
+                setTimeout(() => {
+                    hearts.classList.remove("show");
+                }, 1200);
+            });
+
+            // ------ SNAKE GAME ------
+
+            const canvas = document.getElementById("snakeGame");
+            const ctx = canvas.getContext("2d");
+
+            let grid = 10;
+            let snake = [];
+            let apple = {};
+            let dx = grid;
+            let dy = 0;
+            let count = 0;
+
+            function initCanvas(resize = false) {
+            
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+
+                snake = [{
+                    x: Math.floor(canvas.width / 2 / grid) * grid,
+                    y: Math.floor(canvas.height / 2 / grid) * grid
+                    }];
+                    dx = grid;
+                    dy = 0;
+
+                    spawnApple();
+                }
+            
+
+            function spawnApple() {
+                apple.x = Math.floor(Math.random() * (canvas.width / grid)) * grid;
+                apple.y = Math.floor(Math.random() * (canvas.height / grid)) * grid;
+            }
+
+            document.addEventListener("keydown", e => {
+                switch(e.key) {
+                    case "ArrowUp":
+                        if (dy === 0) { dx = 0; dy = -grid; } break;
+                    case "ArrowDown":
+                        if (dy === 0) { dx = 0; dy = grid; } break;
+                    case "ArrowLeft": 
+                        if (dx === 0) { dx = -grid; dy = 0; } break;
+                    case "ArrowRight": 
+                        if (dx === 0) { dx = grid; dy = 0; } break;
+                    }
+            });
+
+            window.addEventListener("resize", () => {
+                initCanvas(true);
+            });
+
+            function loop() {
+                requestAnimationFrame(loop);
+
+                if (++count < 12) return;
+                count = 0;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const head = {
+                    x: snake[0].x + dx,
+                    y: snake[0].y + dy
+                };
+
+                // wall collision reset:
+                if (
+                    head.x < 0 || head.x >= canvas.width ||
+                    head.y < 0 || head.y >= canvas.height
+                ) {
+                    initCanvas();
+                    return;
+                }
+
+                snake.unshift(head);
+
+                // apple collision:
+
+                if (head.x === apple.x && head.y === apple.y) {
+                    spawnApple();
+                } else {
+                    snake.pop();
+                }
+
+                // self collision
+                for (let i = 1; i < snake.length; i++) {
+                    if (head.x === snake[i].x && head.y === snake[i].y) {
+                        initCanvas ();
+                        return;
+                    }
+                }
+
+                const styles = getComputedStyle(document.body);
+
+                const snakeColor = styles.getPropertyValue("--snake-color").trim();
+                const appleColor = styles.getPropertyValue("--apple-color").trim();
+
+                // draw apple:
+
+                ctx.fillStyle = appleColor;
+                ctx.fillRect(apple.x, apple.y, grid, grid);
+
+                // draw snake:
+
+                ctx.fillStyle = snakeColor;
+                snake.forEach(segment => {
+                    ctx.fillRect(segment.x, segment.y, grid, grid);
+                });
+
+            }
+
+            initCanvas();
+            requestAnimationFrame(loop);
 
         </script>
 
