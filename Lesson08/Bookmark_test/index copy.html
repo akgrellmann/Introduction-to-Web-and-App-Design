@@ -555,7 +555,9 @@
                 position: relative;
                 flex-shrink: 0;
 
-                transition: transform 0.15s ease;
+                transition:
+                    background-color 0.2 ease;
+                transform: 0.15s ease;
             }
 
             .todo-item input[type="checkbox"]:checked {
@@ -593,91 +595,6 @@
             #themeToggle:hover {
                 transform: rotate(20deg);
             }
-
-            .bubble-wrap {
-                position: relative;
-                display: grid;
-                grid-template-columns: repeat(12, 20px);
-                grid-auto-rows: 20px;
-                gap: 6px;
-                padding: 8px 14px;
-                border-radius: 20px;
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(4px);
-                max-height: 90px;
-                overflow: hidden;
-            }
-
-            .bubble-wrap::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background-image: url("https://www.transparenttextures.com/patterns/plastic.png");
-                opacity: 0.15;
-                pointer-events: none;
-                border-radius: 20px;
-            }
-
-            .bubble {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                cursor: pointer;
-                position: relative;
-
-                background: radial-gradient(circle at 30% 30%,
-                rgba(255, 255, 255, 0.9),
-                rgba(255, 255, 255, 0.3) 40%,
-                rgba(0, 0, 0, 0.2) 100%);
-
-                box-shadow: 
-                inset -2px -3px 6px rgba(0, 0, 0, 0.25),
-                inset 2px 2px 6px rgba(255, 255, 255, 0.04),
-                0 2px 4px rgba(0, 0, 0, 0.2);
-
-                transition: transform 0.1s ease,
-                            box-shadow 0.1s ease,
-                            opacity 0.2s ease;
-            }
-
-            .bubble:hover {
-                transform: scale(1.1);
-            }
-
-            .bubble:active {
-                transform: scale(0.92);
-            }
-
-            .bubble.popped {
-                background: radial-gradient(circle,
-                rgba(0, 0, 0, 0.2),
-                transparent 70%);
-                box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
-                transform: scale(0.75);
-                opacity: 0.4;
-                pointer-events: none;
-                cursor: default;
-            }
-
-            /* mini explosion */
-            .bubble.pop-anim::after {
-                content: "";
-                position: absolute;
-                width: 6px;
-                height: 6px;
-                background: white;
-                border-radius: 50%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                animation: popFlash 0.2s ease-out forwards;
-            }
-
-            @keyframes popFlash {
-                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
-            }
-
         </style>
     </head>
 
@@ -695,8 +612,6 @@
                     <input id="search" type="text" placeholder="Search links...">
                 </div>
             </div>
-
-            <div class="bubble-wrap" id="bubbleWrap"></div>
 
             <div class="header-actions">
                 <button id="themeToggle" class="icon-btn">☀</button>
@@ -892,7 +807,7 @@
                     <li><a href="https://quickdraw.withgoogle.com/">Quick,Draw!</a></li>
                     <li><a href="https://www.geoguessr.com">Geoguessr</a></li>
                     <li><a href="https://www.edclub.com/sportal/program-3.game">TypingClub</a></li>
-                    <li><a href="https://cardgames.io/pyramidsolitaire/"> Pyramid Solitaire</a></li>
+                    <li><a href="https://cardgames.io/pyramidsolitaire/">Solitare</a></li>
                     <li><a href="https://flexboxfroggy.com/#en">Flexbox Froggy</a></li>
                     <li><a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a></li>
                     <li><a href="https://guessthemovie.name">Guess The Movie</a></li>
@@ -1177,59 +1092,6 @@
                 });
 
             }
-
-
-            // ------ BUBBLE WRAP ------
-
-            const popSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3");
-            popSound.volume = 0.3;
-
-            const bubbleWrap = document.querySelector("#bubbleWrap");
-            const TOTAL_BUBBLES = 24;
-            let resetTimeout = null;
-
-            function createBubbles() {
-                bubbleWrap.innerHTML = "";
-
-                for (let i = 0; i < TOTAL_BUBBLES; i++) {
-                    const bubble = document.createElement("div");
-                    bubble.classList.add("bubble");
-                    
-                    bubbleWrap.appendChild(bubble);
-                }
-            }
-
-            bubbleWrap.addEventListener("click", (e) => {
-                const bubble = e.target.closest(".bubble");
-
-                if (!bubble) return; //clicou fora da bolha
-                if (bubble.classList.contains("popped")) return;
-
-                bubble.classList.add("popped");
-
-                popSound.currentTime = 0;
-                popSound.play();
-
-                checkAllPopped();
-            });
-
-            function checkAllPopped() {
-                const allBubbles = bubbleWrap.querySelectorAll(".bubble");
-
-                const allArePopped = [...allBubbles].every(b =>
-                    b.classList.contains("popped")
-                );
-
-                if (allArePopped) {
-                    if (resetTimeout) clearTimeout(resetTimeout);
-
-                    resetTimeout = setTimeout(() => {
-                        createBubbles();
-                    }, 800);
-                }
-            }
-
-            createBubbles();
 
             </script>
 
